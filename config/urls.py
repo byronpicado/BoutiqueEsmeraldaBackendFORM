@@ -19,34 +19,30 @@ from django.urls import path, include
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.contrib import admin
 from django.urls import path, include
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from django.contrib import admin
-from django.urls import path
-
-
-
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Snippets API",
+      title="API Boutique Esmeralda",
       default_version='v1',
-      description="Test description",
+      description="API para manejar el formulario de contacto",
       terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
+      contact=openapi.Contact(email="contact@boutiqueesmeralda.com"),
       license=openapi.License(name="BSD License"),
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),
 )
 
-
-
 urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
-    path('catalogos/', include('apps.catalogos.urls')),
+
+    # Endpoint público que consumirá tu Static Web App
+    path('api/contacto/', include('apps.catalogos.formulario.urls')),
 ]
